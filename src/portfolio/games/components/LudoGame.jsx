@@ -194,38 +194,24 @@ const LUDO_HOME_LANES = {
     { row: 9, column: 7 },
   ],
 }
-const LUDO_BASE_SLOTS = {
-  red: [
-    { row: 2, column: 2 },
-    { row: 2, column: 4 },
-    { row: 4, column: 2 },
-    { row: 4, column: 4 },
-  ],
-  blue: [
-    { row: 2, column: 10 },
-    { row: 2, column: 12 },
-    { row: 4, column: 10 },
-    { row: 4, column: 12 },
-  ],
-  yellow: [
-    { row: 10, column: 10 },
-    { row: 10, column: 12 },
-    { row: 12, column: 10 },
-    { row: 12, column: 12 },
-  ],
-  green: [
-    { row: 10, column: 2 },
-    { row: 10, column: 4 },
-    { row: 12, column: 2 },
-    { row: 12, column: 4 },
-  ],
-}
 const LUDO_BASE_AREAS = {
   red: { rowStart: 0, rowEnd: 5, columnStart: 0, columnEnd: 5 },
   blue: { rowStart: 0, rowEnd: 5, columnStart: 9, columnEnd: 14 },
   yellow: { rowStart: 9, rowEnd: 14, columnStart: 9, columnEnd: 14 },
   green: { rowStart: 9, rowEnd: 14, columnStart: 0, columnEnd: 5 },
 }
+const LUDO_BASE_INNER_BOUNDS = {
+  red: { rowStart: 1, rowEnd: 4, columnStart: 1, columnEnd: 4 },
+  blue: { rowStart: 1, rowEnd: 4, columnStart: 10, columnEnd: 13 },
+  yellow: { rowStart: 10, rowEnd: 13, columnStart: 10, columnEnd: 13 },
+  green: { rowStart: 10, rowEnd: 13, columnStart: 1, columnEnd: 4 },
+}
+const LUDO_BASE_TOKEN_ANCHORS = [
+  { x: 30, y: 30 },
+  { x: 70, y: 30 },
+  { x: 30, y: 70 },
+  { x: 70, y: 70 },
+]
 const LUDO_CLASSIC_TONES = {
   red: {
     color: '#ef1b24',
@@ -352,20 +338,6 @@ const ludoTrackIndexByKey = LUDO_TRACK_COORDS.reduce((map, coordinate, index) =>
   map[`${coordinate.row}-${coordinate.column}`] = index
   return map
 }, {})
-
-const ludoBaseSlotByKey = Object.entries(LUDO_BASE_SLOTS).reduce(
-  (map, [playerId, slots]) => {
-    slots.forEach((slot, tokenIndex) => {
-      map[`${slot.row}-${slot.column}`] = {
-        playerId,
-        tokenIndex,
-      }
-    })
-
-    return map
-  },
-  {},
-)
 
 const ludoHomeLaneByKey = Object.entries(LUDO_HOME_LANES).reduce(
   (map, [playerId, cells]) => {
@@ -1183,12 +1155,7 @@ function chooseBestLudoAiMove(currentState) {
 }
 
 function isLudoBaseInnerCell(row, column, playerId) {
-  const innerBounds = {
-    red: { rowStart: 1, rowEnd: 4, columnStart: 1, columnEnd: 4 },
-    blue: { rowStart: 1, rowEnd: 4, columnStart: 10, columnEnd: 13 },
-    yellow: { rowStart: 10, rowEnd: 13, columnStart: 10, columnEnd: 13 },
-    green: { rowStart: 10, rowEnd: 13, columnStart: 1, columnEnd: 4 },
-  }[playerId]
+  const innerBounds = LUDO_BASE_INNER_BOUNDS[playerId]
 
   return (
     innerBounds &&
@@ -1197,6 +1164,23 @@ function isLudoBaseInnerCell(row, column, playerId) {
     column >= innerBounds.columnStart &&
     column <= innerBounds.columnEnd
   )
+}
+
+function getLudoBaseTokenStyle(playerId, tokenIndex) {
+  const bounds = LUDO_BASE_INNER_BOUNDS[playerId]
+  const anchor = LUDO_BASE_TOKEN_ANCHORS[tokenIndex] ?? LUDO_BASE_TOKEN_ANCHORS[0]
+
+  if (!bounds) {
+    return {}
+  }
+
+  const width = bounds.columnEnd - bounds.columnStart + 1
+  const height = bounds.rowEnd - bounds.rowStart + 1
+
+  return {
+    left: `${((bounds.columnStart + (anchor.x / 100) * width) / 15) * 100}%`,
+    top: `${((bounds.rowStart + (anchor.y / 100) * height) / 15) * 100}%`,
+  }
 }
 
 function isLudoCenterBlock(row, column) {
@@ -1601,7 +1585,7 @@ function LudoGame() {
   const renderedPlayers = visualPlayers ?? gameState.players
   const activeColorIds = getActiveLudoColorIds(playerCount)
   const placementTarget = getLudoPlacementTarget(gameState.players.length)
-  const baseTokenByCell = {}
+  const baseTokens = []
   const trackTokensByCell = {}
   const homeTokensByCell = {}
   const centerTokens = []
@@ -1609,11 +1593,10 @@ function LudoGame() {
   renderedPlayers.forEach((player) => {
     player.tokens.forEach((token) => {
       if (token.progress === -1) {
-        const baseSlot = LUDO_BASE_SLOTS[player.id][token.tokenIndex]
-        baseTokenByCell[`${baseSlot.row}-${baseSlot.column}`] = {
+        baseTokens.push({
           player,
           tokenIndex: token.tokenIndex,
-        }
+        })
         return
       }
 
@@ -2268,7 +2251,6 @@ function LudoGame() {
                     {Array.from({ length: 15 }, (_, columnIndex) => {
                       const key = `${rowIndex}-${columnIndex}`
                       const trackIndex = ludoTrackIndexByKey[key]
-                      const baseSlotInfo = ludoBaseSlotByKey[key]
                       const homeLaneInfo = ludoHomeLaneByKey[key]
                       const homeArrow = LUDO_HOME_ARROW_BY_KEY[key]
                       const HomeArrowIcon = homeArrow?.Icon
@@ -2278,24 +2260,13 @@ function LudoGame() {
                       const baseAreaOwner = baseAreaOwnerId
                         ? LUDO_PLAYER_DEFS[baseAreaOwnerId]
                         : null
-                      const slotOwner = baseSlotInfo
-                        ? gameState.players.find(
-                            (player) => player.id === baseSlotInfo.playerId,
-                          ) ?? LUDO_PLAYER_DEFS[baseSlotInfo.playerId]
-                        : null
                       const homeLaneOwner = homeLaneInfo
                         ? LUDO_PLAYER_DEFS[homeLaneInfo.playerId]
                         : null
                       const classicHomePathOwner = classicHomePathPlayerId
                         ? LUDO_PLAYER_DEFS[classicHomePathPlayerId]
                         : null
-                      const tokens = baseSlotInfo
-                        ? baseTokenByCell[key]
-                          ? [baseTokenByCell[key]]
-                          : []
-                        : trackTokensByCell[key] ??
-                          homeTokensByCell[key] ??
-                          []
+                      const tokens = trackTokensByCell[key] ?? homeTokensByCell[key] ?? []
                       const isCenter = rowIndex === 7 && columnIndex === 7
                       const isCenterBlock = isLudoCenterBlock(rowIndex, columnIndex)
                       const isBaseInner =
@@ -2404,19 +2375,6 @@ function LudoGame() {
 
                           {isCenter ? (
                             null
-                          ) : baseSlotInfo && slotOwner ? (
-                            <div className="flex h-full w-full items-center justify-center">
-                              <span
-                                className={cx(
-                                  'inline-flex h-[72%] w-[72%] rounded-full border-2 shadow-[inset_0_5px_7px_rgba(255,255,255,0.62),inset_0_-7px_10px_rgba(15,23,42,0.22),0_6px_10px_rgba(15,23,42,0.22)]',
-                                  LUDO_CLASSIC_TONES[baseAreaOwner?.id]?.token ?? 'bg-white',
-                                  LUDO_CLASSIC_TONES[baseAreaOwner?.id]?.border ?? 'border-slate-300',
-                                )}
-                              />
-                              {tokens.length ? (
-                                renderLudoTokenStack(tokens, key)
-                              ) : null}
-                            </div>
                           ) : tokens.length ? (
                             renderLudoTokenStack(tokens, key)
                           ) : null}
@@ -2424,6 +2382,20 @@ function LudoGame() {
                       )
                     })}
                   </div>
+                ))}
+                {baseTokens.map((token) => (
+                  <span
+                    className="absolute z-30 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+                    key={`base-token-${token.player.id}-${token.tokenIndex}`}
+                    style={getLudoBaseTokenStyle(token.player.id, token.tokenIndex)}
+                  >
+                    <LudoToken
+                      isMovable={isTokenMovable(token)}
+                      onClick={() => handleTokenClick(token.player.id, token.tokenIndex)}
+                      player={token.player}
+                      tokenIndex={token.tokenIndex}
+                    />
+                  </span>
                 ))}
               </div>
             </div>
