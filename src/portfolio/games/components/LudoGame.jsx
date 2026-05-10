@@ -26,6 +26,7 @@ const LUDO_PLAYER_COLOR_SETS = {
 const LUDO_LAST_TRACK_PROGRESS = 50
 const LUDO_FINAL_PROGRESS = 56
 const LUDO_SAFE_TRACK_INDICES = new Set([0, 8, 13, 21, 26, 34, 39, 47])
+const LUDO_NEUTRAL_CELL_COLOR = '#e7edf4'
 const LUDO_PLACEMENT_LABELS = {
   1: '1st',
   2: '2nd',
@@ -1203,7 +1204,7 @@ function isLudoCenterBlock(row, column) {
 }
 
 function getLudoColor(playerId) {
-  return LUDO_CLASSIC_TONES[playerId]?.color ?? '#ffffff'
+  return LUDO_CLASSIC_TONES[playerId]?.color ?? LUDO_NEUTRAL_CELL_COLOR
 }
 
 function getLudoCellBackgroundColor({
@@ -1222,7 +1223,7 @@ function getLudoCellBackgroundColor({
   }
 
   if (isHomeArrowCell) {
-    return '#ffffff'
+    return LUDO_NEUTRAL_CELL_COLOR
   }
 
   if (classicHomePathPlayerId) {
@@ -1238,14 +1239,14 @@ function getLudoCellBackgroundColor({
   }
 
   if (isBaseInner || isPathCell || trackIndex !== undefined) {
-    return '#ffffff'
+    return LUDO_NEUTRAL_CELL_COLOR
   }
 
   if (baseAreaOwnerId) {
     return getLudoColor(baseAreaOwnerId)
   }
 
-  return '#ffffff'
+  return LUDO_NEUTRAL_CELL_COLOR
 }
 
 function getLudoCellStyle({
@@ -1263,18 +1264,18 @@ function getLudoCellStyle({
   }
 
   const bevelShadow = isColoredCell
-    ? 'inset 1px 1px 0 rgba(255,255,255,0.36), inset -2px -2px 0 rgba(15,23,42,0.2), inset 0 8px 12px rgba(255,255,255,0.12), 0 1px 2px rgba(15,23,42,0.16)'
+    ? 'inset 1px 1px 0 rgba(255,255,255,0.28), inset -2px -2px 0 rgba(15,23,42,0.22), inset 0 6px 10px rgba(255,255,255,0.08), 0 1px 2px rgba(15,23,42,0.16)'
     : isPathCell
-      ? 'inset 1px 1px 0 rgba(255,255,255,0.92), inset -1px -1px 0 rgba(15,23,42,0.16), 0 1px 2px rgba(15,23,42,0.1)'
-      : 'inset 1px 1px 0 rgba(255,255,255,0.6), inset -2px -2px 0 rgba(15,23,42,0.14), 0 1px 2px rgba(15,23,42,0.12)'
+      ? 'inset 1px 1px 0 rgba(255,255,255,0.58), inset -1px -1px 0 rgba(15,23,42,0.2), 0 1px 2px rgba(15,23,42,0.12)'
+      : 'inset 1px 1px 0 rgba(255,255,255,0.42), inset -2px -2px 0 rgba(15,23,42,0.16), 0 1px 2px rgba(15,23,42,0.12)'
 
   return {
     backgroundColor,
     backgroundImage: isColoredCell
-      ? `linear-gradient(145deg, rgba(255,255,255,0.42), rgba(255,255,255,0.04) 38%, rgba(15,23,42,0.2)), linear-gradient(315deg, rgba(15,23,42,0.16), transparent 46%)`
+      ? `linear-gradient(145deg, rgba(255,255,255,0.28), rgba(255,255,255,0.03) 38%, rgba(15,23,42,0.22)), linear-gradient(315deg, rgba(15,23,42,0.18), transparent 46%)`
       : isBaseInner
-        ? 'radial-gradient(circle at 38% 32%, rgba(255,255,255,0.98), rgba(255,255,255,0.78) 42%, rgba(226,232,240,0.9))'
-        : 'linear-gradient(145deg, rgba(255,255,255,0.96), rgba(241,245,249,0.88) 52%, rgba(203,213,225,0.66))',
+        ? 'radial-gradient(circle at 38% 32%, rgba(248,250,252,0.78), rgba(226,232,240,0.72) 42%, rgba(190,200,214,0.76))'
+        : 'linear-gradient(145deg, rgba(248,250,252,0.68), rgba(226,232,240,0.72) 52%, rgba(172,184,202,0.58))',
     boxShadow: bevelShadow,
   }
 }
@@ -2304,7 +2305,7 @@ function LudoGame() {
                         trackIndex,
                       })
                       const isColoredCell =
-                        cellBackgroundColor !== '#ffffff' &&
+                        cellBackgroundColor !== LUDO_NEUTRAL_CELL_COLOR &&
                         cellBackgroundColor !== 'transparent'
                       const cellStyle = getLudoCellStyle({
                         backgroundColor: cellBackgroundColor,
