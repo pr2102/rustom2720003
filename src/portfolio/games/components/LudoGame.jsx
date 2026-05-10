@@ -1272,6 +1272,14 @@ function getLudoCellStyle({
     }
   }
 
+  if (isBaseInner) {
+    return {
+      backgroundColor,
+      backgroundImage: 'none',
+      boxShadow: 'none',
+    }
+  }
+
   const bevelShadow = isColoredCell
     ? 'inset 1px 1px 0 rgba(255,255,255,0.28), inset -2px -2px 0 rgba(15,23,42,0.22), inset 0 6px 10px rgba(255,255,255,0.08), 0 1px 2px rgba(15,23,42,0.16)'
     : isPathCell
@@ -2341,7 +2349,7 @@ function LudoGame() {
                       if (isBaseInner) {
                         cellClassName = cx(
                           cellClassName,
-                          'border-white shadow-[inset_0_0_0_1px_rgba(15,23,42,0.03)]',
+                          'border-transparent shadow-none',
                         )
                       }
 
