@@ -27,7 +27,6 @@ const LUDO_LAST_TRACK_PROGRESS = 50
 const LUDO_FINAL_PROGRESS = 56
 const LUDO_SAFE_TRACK_INDICES = new Set([0, 8, 13, 21, 26, 34, 39, 47])
 const LUDO_NEUTRAL_CELL_COLOR = '#e7edf4'
-const LUDO_HOME_EDGE_CELL_COLOR = '#4b5563'
 const LUDO_PLACEMENT_LABELS = {
   1: '1st',
   2: '2nd',
@@ -1244,7 +1243,7 @@ function getLudoCellBackgroundColor({
   }
 
   if (baseAreaOwnerId) {
-    return LUDO_HOME_EDGE_CELL_COLOR
+    return getLudoColor(baseAreaOwnerId)
   }
 
   return LUDO_NEUTRAL_CELL_COLOR
@@ -1253,6 +1252,7 @@ function getLudoCellBackgroundColor({
 function getLudoCellStyle({
   backgroundColor,
   isBaseInner,
+  isBaseOuter,
   isCenterBlock,
   isColoredCell,
   isPathCell,
@@ -1260,6 +1260,14 @@ function getLudoCellStyle({
   if (isCenterBlock) {
     return {
       backgroundColor: 'transparent',
+      boxShadow: 'none',
+    }
+  }
+
+  if (isBaseOuter) {
+    return {
+      backgroundColor,
+      backgroundImage: 'none',
       boxShadow: 'none',
     }
   }
@@ -2285,6 +2293,7 @@ function LudoGame() {
                       const isBaseInner =
                         baseAreaOwnerId &&
                         isLudoBaseInnerCell(rowIndex, columnIndex, baseAreaOwnerId)
+                      const isBaseOuter = Boolean(baseAreaOwnerId && !isBaseInner)
                       const isPathCell =
                         trackIndex !== undefined ||
                         Boolean(homeLaneInfo) ||
@@ -2311,6 +2320,7 @@ function LudoGame() {
                       const cellStyle = getLudoCellStyle({
                         backgroundColor: cellBackgroundColor,
                         isBaseInner,
+                        isBaseOuter,
                         isCenterBlock,
                         isColoredCell,
                         isPathCell,
@@ -2322,7 +2332,9 @@ function LudoGame() {
                       if (baseAreaOwner) {
                         cellClassName = cx(
                           cellClassName,
-                          'border-transparent shadow-[inset_0_0_0_999px_rgba(255,255,255,0.01)]',
+                          isBaseOuter
+                            ? 'border-transparent shadow-none'
+                            : 'border-transparent shadow-[inset_0_0_0_999px_rgba(255,255,255,0.01)]',
                         )
                       }
 
