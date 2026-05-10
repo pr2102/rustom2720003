@@ -1242,10 +1242,6 @@ function getLudoCellBackgroundColor({
     return LUDO_NEUTRAL_CELL_COLOR
   }
 
-  if (baseAreaOwnerId) {
-    return getLudoColor(baseAreaOwnerId)
-  }
-
   return LUDO_NEUTRAL_CELL_COLOR
 }
 
