@@ -1,0 +1,27 @@
+.classic-chessboard {
+  padding: 12px 12px 6px 4px;
+  border: 1px solid #525252;
+  border-radius: 4px;
+  background: #181818;
+  box-shadow: 0 12px 30px #0003;
+}
+.chess-board-row { display: flex; align-items: center; }
+.chess-coordinate { width: 20px; flex-shrink: 0; color: #e5e5e5; text-align: center; font: 600 11px/1.8 var(--font-mono); }
+.chess-square-row { display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); flex: 1; min-width: 0; }
+.chess-square { border: 0; border-radius: 0; cursor: pointer; }
+.chess-square-light { background: #fff; }
+.chess-square-dark { background: #252525; }
+.chess-square-last::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 3px #b49b65; pointer-events: none; }
+.chess-square-selected::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 4px #dcad4f; pointer-events: none; }
+.chess-square-legal { box-shadow: inset 0 0 0 3px #7d977c; }
+.chess-square-capture::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 3px #c46a5d; pointer-events: none; }
+.chess-square:focus-visible { outline: 3px solid #e4ab35; outline-offset: -4px; z-index: 1; }
+.chess-piece { font-size: clamp(1.4rem,5vw,2.7rem); background: transparent; }
+.chess-piece-white { color: #fff; text-shadow: -1px -1px 0 #151515,1px -1px 0 #151515,-1px 1px 0 #151515,1px 1px 0 #151515,0 2px 2px #0005; }
+.chess-piece-black { color: #080808; text-shadow: -1px -1px 0 #eee,1px -1px 0 #eee,-1px 1px 0 #eee,1px 1px 0 #eee,0 2px 2px #0005; }
+.chess-legal-dot { width: 22%; aspect-ratio: 1; border-radius: 50%; background: #789477; border: 1px solid #fff7; }
+.chess-file-coordinates { display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); margin-left: 20px; padding-top: 5px; }
+.chess-file-coordinates .chess-coordinate { width: auto; }
+.chess-square-moved .chess-piece { animation: chess-piece-arrive .25s ease-out; }
+@keyframes chess-piece-arrive { from { opacity: .5; } to { opacity: 1; } }
+@media(prefers-reduced-motion:reduce) { .chess-square-moved .chess-piece { animation: none; } }

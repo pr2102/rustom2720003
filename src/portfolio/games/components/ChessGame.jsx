@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Bot, Crown, RotateCcw } from 'lucide-react'
+import './chessBoard.css'
 import {
   buttonClassNames,
   cardLabelClassName,
@@ -52,9 +53,9 @@ const CHESS_PIECE_FONT_FAMILY =
   '"Segoe UI Symbol","Noto Sans Symbols 2","Noto Sans Symbols","Arial Unicode MS",sans-serif'
 const CHESS_PIECE_TOKEN_CLASSNAMES = {
   white:
-    'border-white/75 bg-gradient-to-br from-white via-slate-100 to-slate-200 text-slate-900 shadow-[0_12px_26px_rgba(148,163,184,0.24)]',
+    'chess-piece-white',
   black:
-    'border-slate-400/65 bg-gradient-to-br from-slate-200 via-slate-300 to-slate-400 text-slate-950 shadow-[0_12px_26px_rgba(15,23,42,0.2)]',
+    'chess-piece-black',
 }
 
 let chessAudioContext = null
@@ -1063,7 +1064,7 @@ function ChessPieceToken({ piece, isSelected }) {
       <span
         aria-hidden="true"
         className={cx(
-          'flex h-full w-full select-none items-center justify-center rounded-[0.82rem] border text-[1.95rem] leading-none transition duration-200 sm:text-[2.1rem]',
+          'chess-piece flex h-full w-full select-none items-center justify-center text-[1.95rem] leading-none transition duration-200 sm:text-[2.1rem]',
           CHESS_PIECE_TOKEN_CLASSNAMES[piece.color],
           isSelected && 'scale-[1.04]',
         )}
@@ -1384,13 +1385,13 @@ function ChessGame() {
             </div>
           </div>
 
-          <div className="grid gap-2">
+          <div className="classic-chessboard">
             {gameState.board.map((row, rowIndex) => (
-              <div className="flex items-center gap-2" key={`chess-row-${rowIndex}`}>
-                <span className="w-4 text-center text-xs font-semibold text-muted">
+              <div className="chess-board-row" key={`chess-row-${rowIndex}`}>
+                <span className="chess-coordinate">
                   {CHESS_RANKS[rowIndex]}
                 </span>
-                <div className="grid flex-1 grid-cols-8 gap-1">
+                <div className="chess-square-row">
                   {row.map((piece, columnIndex) => {
                     const isLightSquare = (rowIndex + columnIndex) % 2 === 0
                     const isSelected = isSameChessSquare(gameState.selectedSquare, {
@@ -1422,26 +1423,24 @@ function ChessGame() {
                         key={`chess-square-${rowIndex}-${columnIndex}`}
                         type="button"
                         className={cx(
-                          'relative aspect-square overflow-hidden rounded-[0.95rem] border p-0.5 transition duration-200 sm:p-1',
+                          'chess-square relative aspect-square overflow-hidden p-0',
                           isLightSquare
-                            ? 'bg-[color:var(--portfolio-glass-hover)]'
-                            : 'bg-[color:var(--portfolio-glass-inline)]',
+                            ? 'chess-square-light'
+                            : 'chess-square-dark',
                           isSelected &&
-                            'border-accent shadow-[0_0_0_2px_rgba(22,185,221,0.24)]',
+                            'chess-square-selected',
                           isLegalTarget &&
-                            'border-[color:var(--portfolio-glass-border-strong)] shadow-[0_0_0_2px_rgba(46,115,255,0.18)]',
+                            'chess-square-legal',
                           isLastMoveSquare &&
-                            'bg-gradient-to-br from-amber-300/24 via-orange-300/18 to-rose-300/20',
+                            'chess-square-last',
                           isAnimatedSquare &&
-                            'animate-[bounce_0.42s_ease-in-out_1] shadow-[0_0_0_2px_rgba(250,204,21,0.22),var(--portfolio-soft-shadow)]',
+                            'chess-square-moved',
                           gameState.lastMove?.captured &&
                             isSameChessSquare(gameState.lastMove?.to, {
                               row: rowIndex,
                               column: columnIndex,
                             }) &&
-                            'shadow-[0_0_0_2px_rgba(244,63,94,0.24),var(--portfolio-soft-shadow)]',
-                          !piece &&
-                            'hover:-translate-y-0.5 hover:border-line-strong',
+                            'chess-square-capture',
                         )}
                         aria-label={`${pieceLabel} on ${squareLabel}`}
                         onClick={() => handleSquareClick(rowIndex, columnIndex)}
@@ -1453,7 +1452,7 @@ function ChessGame() {
                           />
                         ) : isLegalTarget ? (
                           <span className="absolute inset-0 flex items-center justify-center">
-                            <span className="h-3.5 w-3.5 rounded-full bg-accent shadow-[0_0_0_8px_rgba(22,185,221,0.14)]" />
+                            <span className="chess-legal-dot" />
                           </span>
                         ) : null}
                       </button>
@@ -1463,10 +1462,10 @@ function ChessGame() {
               </div>
             ))}
 
-            <div className="ml-6 grid grid-cols-8 gap-1">
+            <div className="chess-file-coordinates">
               {CHESS_FILES.map((file) => (
                 <span
-                  className="text-center text-xs font-semibold text-muted"
+                  className="chess-coordinate"
                   key={`file-${file}`}
                 >
                   {file}
