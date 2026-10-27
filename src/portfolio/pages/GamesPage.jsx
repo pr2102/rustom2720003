@@ -1,89 +1,43 @@
-import { ArrowLeft, ArrowRight, Gamepad2, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Gamepad2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useGames } from '../games/GamesContext'
-import {
-  buttonClassNames,
-  cardLabelClassName,
-  chipClassName,
-  cx,
-  panelClassName,
-} from '../classes'
-import { PageSection, SectionHeading } from '../ui'
+import { PageSection } from '../ui'
+import './gamesLounge.css'
 
-function GamesPage() {
+function GamePoster({ kind }) {
+  return (
+    <div aria-hidden="true" className={`lounge-poster lounge-poster-${kind}`}>
+      <span className="lounge-poster-orbit" />
+      {kind === 'rush' ? <div className="lounge-targets">{Array.from({ length: 9 }, (_, index) => <i key={index} className={index === 4 ? 'is-lit' : ''} />)}</div> : <><span className="lounge-planet" /><span className="lounge-rock lounge-rock-one" /><span className="lounge-rock lounge-rock-two" /><span className="lounge-rocket-trail" /><span className="lounge-rocket" /></>}
+      <span className="lounge-poster-caption">{kind === 'rush' ? 'FOLLOW THE FREQUENCY' : 'TAKE THE SCENIC ROUTE'}</span>
+    </div>
+  )
+}
+
+export default function GamesPage() {
   const { games } = useGames()
+  const featured = games.filter((game) => game.preview)
+  const classics = games.filter((game) => !game.preview)
 
   return (
     <PageSection>
-      <Link className={cx(buttonClassNames.ghost, 'mb-5 w-full sm:w-fit')} to="/contact">
-        <ArrowLeft size={18} />
-        Back to contact
-      </Link>
-
-      <SectionHeading
-        description="Chase neon signals. Dodge a meteor storm. Or settle in with a classic. Pick your challenge and play right in your browser."
-        eyebrow="Games"
-        title="Small games. Big arcade energy."
-      />
-
-      <div className="mb-5 flex flex-wrap gap-3">
-        <span className={chipClassName}>
-          <Gamepad2 size={15} />
-          {games.length} React mini-games
-        </span>
-        <span className={chipClassName}>Nested game routes</span>
-        <span className={chipClassName}>Keyboard and mobile friendly</span>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {games.map((game) => {
+      <div className="games-lounge">
+        <header className="lounge-topbar"><Link to="/contact"><ArrowLeft size={16} /> Back to portfolio</Link><span><Gamepad2 size={17} /> RY / PLAYGROUND</span></header>
+        <div className="lounge-intro">
+          <div><p className="lounge-eyebrow">SIDE QUESTS / BIG ENERGY</p><h1>A little less work.<br />A lot more <em>play.</em></h1><p className="lounge-description">A pocket-sized arcade for your next break. Test your reflexes, escape into orbit, or challenge a friend.</p></div>
+          <div className="lounge-stamp" aria-label={`${games.length} games, no downloads`}><Gamepad2 size={38} /><strong>{games.length} games</strong><span>ZERO DOWNLOADS</span></div>
+        </div>
+        <div className="lounge-section-title"><h2>The main attractions</h2><span>01 / FEATURED</span></div>
+        <div className="lounge-featured">
+          {featured.map((game, index) => <Link key={game.id} to={game.id} className="lounge-feature"><GamePoster kind={game.preview} /><div className="lounge-feature-copy"><div className="lounge-feature-meta"><span>0{index + 1} / {game.preview === 'rush' ? 'REFLEX SPRINT' : 'COSMIC SURVIVAL'}</span><span className="lounge-play-icon"><ArrowUpRight size={24} /></span></div><h3>{game.title}</h3><p>{game.blurb}</p><div className="lounge-tags">{game.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></div></Link>)}
+        </div>
+        <div className="lounge-section-title"><h2>Never out of style</h2><span>02 / THE CLASSICS</span></div>
+        <div className="lounge-classics">{classics.map((game, index) => {
           const Icon = game.icon
-
-          return (
-            <Link
-              className={cx(
-                panelClassName,
-                'group grid min-h-full gap-4 overflow-hidden p-5 transition duration-200 hover:-translate-y-1 hover:border-line-strong',
-              )}
-              key={game.id}
-              to={game.id}
-            >
-              {game.preview && <div aria-hidden="true" className={`arcade-preview arcade-preview-${game.preview}`}><span>{game.preview === 'rush' ? '◎ + ◎' : '✦ ▲ ✦'}</span></div>}
-              <div className="flex items-start justify-between gap-4">
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-teal-soft text-teal shadow-[var(--portfolio-soft-shadow)]">
-                  <Icon size={21} />
-                </span>
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-[color:var(--portfolio-glass-soft)] text-ink transition duration-200 group-hover:translate-x-1 group-hover:border-line-strong">
-                  <ArrowRight size={18} />
-                </span>
-              </div>
-
-              <div>
-                <p className={cardLabelClassName}>Play game</p>
-                <h3 className="mt-2 font-display text-[1.55rem] leading-[1.05] tracking-[-0.04em] text-ink">
-                  {game.title}
-                </h3>
-                <p className="mt-3 leading-8 text-muted">{game.blurb}</p>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {game.tags.map((tag) => (
-                  <span className={chipClassName} key={tag}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-accent-strong">
-                <Sparkles size={15} />
-                Open {game.title}
-              </span>
-            </Link>
-          )
-        })}
+          return <Link key={game.id} to={game.id} className="lounge-classic" style={{ '--card-tone': ['#f6d99b', '#c4dbce', '#d3dff0', '#f2c8b9'][index % 4] }}><span className="lounge-classic-icon"><Icon size={28} /></span><span className="lounge-classic-number">{String(index + 1).padStart(2, '0')}</span><h3>{game.title}</h3><p>{game.blurb}</p><span className="lounge-classic-cta">Let's play <ArrowUpRight size={18} /></span></Link>
+        })}</div>
+        <footer className="lounge-bottom"><span>BUILT WITH REACT. PLAYED WITH CURIOSITY.</span><span>Take a break. Stay a while.</span></footer>
       </div>
     </PageSection>
   )
 }
-
-export default GamesPage

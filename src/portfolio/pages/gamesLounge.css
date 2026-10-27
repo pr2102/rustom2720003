@@ -1,0 +1,52 @@
+.games-lounge { --lounge-paper: #f6f1e6; --lounge-ink: #24342e; --lounge-orange: #d84721; padding: clamp(18px,4vw,48px); border: 1px solid #d9d3c5; border-radius: 28px; background: radial-gradient(#29403409 .8px,transparent .8px) 0 0/7px 7px,var(--lounge-paper); color: var(--lounge-ink); }
+.lounge-topbar,.lounge-topbar a,.lounge-topbar > span { display: flex; align-items: center; gap: 9px; }
+.lounge-topbar { justify-content: space-between; flex-wrap: wrap; gap: 18px; padding-bottom: 24px; border-bottom: 1px solid #24342e30; font: 11px/1.5 var(--font-mono); }
+.lounge-topbar > span { font-weight: bold; letter-spacing: .12em; }
+.lounge-intro { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 48px 0; }
+.lounge-eyebrow { font: 11px/1.6 var(--font-mono); letter-spacing: .16em; color: #a73b20; }
+.lounge-intro h1 { margin-top: 18px; font: 800 clamp(2.7rem,6.6vw,5.8rem)/.99 var(--font-display); letter-spacing: -.065em; }
+.lounge-intro h1 em { color: var(--lounge-orange); font-family: Georgia,serif; font-weight: normal; }
+.lounge-description { max-width: 50ch; margin-top: 24px; color: #526159; font-size: 16px; line-height: 1.9; }
+.lounge-stamp { flex-shrink: 0; width: 155px; height: 155px; border: 1px dashed #24342e70; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; transform: rotate(10deg); background: #eee8d9; }
+.lounge-stamp strong { font: 700 22px var(--font-display); }
+.lounge-stamp span { font: 9px var(--font-mono); letter-spacing: .08em; }
+.lounge-section-title { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 15px 0 22px; }
+.lounge-section-title h2 { font: 700 clamp(1.4rem,3vw,1.9rem) var(--font-display); letter-spacing: -.04em; }
+.lounge-section-title > span { color: #68746d; font: 10px var(--font-mono); letter-spacing: .1em; }
+.lounge-featured { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; margin-bottom: 48px; }
+.lounge-feature { border: 1px solid #24342e25; border-radius: 20px; background: #fffcf4; overflow: hidden; transition: transform .2s,box-shadow .2s; }
+.lounge-feature:hover { transform: translateY(-5px); box-shadow: 0 15px 0 #24342e0c; }
+.lounge-poster { position: relative; height: clamp(210px,24vw,285px); overflow: hidden; display: grid; place-items: center; background: #c9dfd2; }
+.lounge-poster-meteor { background: #df724d; }
+.lounge-poster-orbit { position: absolute; width: 340px; height: 340px; border: 1px solid #24453530; border-radius: 50%; box-shadow: 0 0 0 28px #24453509,0 0 0 60px #24453508; transform: translate(45px,45px); }
+.lounge-targets { width: 180px; display: grid; grid-template-columns: repeat(3,1fr); gap: 13px; transform: rotate(-12deg); }
+.lounge-targets i { aspect-ratio: 1; background: #254b3c; border: 4px solid #e7f3dd; border-radius: 12px; box-shadow: 5px 7px 0 #234d3b40; }
+.lounge-targets .is-lit { background: #edffab; box-shadow: 0 0 32px #edffab,5px 7px 0 #234d3b40; animation: lounge-signal 2s ease-in-out infinite alternate; }
+.lounge-poster-caption { position: absolute; left: 20px; bottom: 17px; color: #20382e; font: 9px var(--font-mono); letter-spacing: .14em; }
+.lounge-planet { position: absolute; width: 150px; height: 150px; border-radius: 50%; top: -45px; right: -15px; background: repeating-linear-gradient(-20deg,#ffc994 0 13px,#f4ad79 13px 22px); }
+.lounge-rocket { position: absolute; width: 70px; height: 95px; background: #f8efd7; clip-path: polygon(50% 0,72% 35%,75% 60%,100% 100%,55% 80%,45% 80%,0 100%,25% 60%,28% 35%); transform: rotate(25deg); top: 65px; left: 43%; }
+.lounge-rocket-trail { position: absolute; width: 16px; height: 100px; background: linear-gradient(#ffdc7e,transparent); transform: rotate(25deg); left: 43%; top: 140px; }
+.lounge-rock { position: absolute; width: 26px; height: 26px; background: #833e2c; border-radius: 35% 50% 25%; }
+.lounge-rock-one { left: 20%; top: 30%; transform: rotate(25deg); }
+.lounge-rock-two { right: 18%; bottom: 20%; width: 40px; height: 40px; transform: rotate(60deg); }
+.lounge-feature-copy { padding: 22px; }
+.lounge-feature-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; font: 9px var(--font-mono); letter-spacing: .1em; }
+.lounge-play-icon { display: grid; place-items: center; border: 1px solid #24342e30; width: 40px; height: 40px; border-radius: 50%; }
+.lounge-feature h3 { font: 800 clamp(1.8rem,3.5vw,2.7rem) var(--font-display); letter-spacing: -.05em; margin: 6px 0 10px; }
+.lounge-feature p { color: #526159; font-size: 14px; line-height: 1.8; }
+.lounge-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+.lounge-tags span { border: 1px solid #24342e25; border-radius: 5px; padding: 5px 8px; font: 9px var(--font-mono); }
+.lounge-classics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.lounge-classic { position: relative; border: 1px solid #24342e25; background: #fffcf4; padding: 22px; border-radius: 14px; display: flex; flex-direction: column; transition: background .2s; }
+.lounge-classic:hover { background: var(--card-tone); }
+.lounge-classic-icon { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; background: var(--card-tone); margin-bottom: 24px; }
+.lounge-classic-number { position: absolute; top: 24px; right: 22px; font: 11px var(--font-mono); color: #66736a; }
+.lounge-classic h3 { font: 700 22px var(--font-display); letter-spacing: -.03em; }
+.lounge-classic p { color: #526159; font-size: 13px; line-height: 1.8; margin: 12px 0 24px; }
+.lounge-classic-cta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; font-weight: 700; font-size: 12px; }
+.lounge-bottom { margin-top: 36px; border-top: 1px solid #24342e30; padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font: 9px/1.8 var(--font-mono); color: #526159; }
+.games-lounge a:focus-visible { outline: 3px solid #c54621; outline-offset: 4px; }
+@keyframes lounge-signal { to { background: #fff4ab; box-shadow: 0 0 45px #eaff8d; } }
+@media(max-width:760px) { .lounge-stamp { display: none; } .lounge-classics { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:540px) { .lounge-featured,.lounge-classics { grid-template-columns: 1fr; } .lounge-intro { padding: 32px 0; } .lounge-poster { height: 240px; } }
+@media(prefers-reduced-motion:reduce) { .lounge-targets .is-lit { animation: none; } .lounge-feature,.lounge-classic { transition: none; } .lounge-feature:hover { transform: none; } }
