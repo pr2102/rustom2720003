@@ -21,9 +21,9 @@ function GamesPage() {
       </Link>
 
       <SectionHeading
-        description="Choose a React mini-game, read the rules, and open it on its own dedicated route."
+        description="Explore the AI Lab with prompt, evidence, and prediction challenges, or jump into a classic. Every game runs in your browser."
         eyebrow="Games"
-        title="Mini-games with dedicated pages"
+        title="AI brain teasers meet arcade classics"
       />
 
       <div className="mb-5 flex flex-wrap gap-3">

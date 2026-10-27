@@ -114,7 +114,7 @@ function ContactPage() {
               page while you wait to hear back from me.
             </p>
             <div className="flex flex-wrap gap-2 pt-1">
-              <span className={chipClassName}>7 React mini-games</span>
+              <span className={chipClassName}>AI challenges & React mini-games</span>
               <span className={chipClassName}>Dedicated game routes</span>
               <span className={chipClassName}>Keyboard and mobile friendly</span>
             </div>

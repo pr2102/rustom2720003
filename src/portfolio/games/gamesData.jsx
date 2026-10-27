@@ -10,6 +10,7 @@ import {
 import ChessGame from './components/ChessGame'
 import CoinTossGame from './components/CoinTossGame'
 import LudoGame from './components/LudoGame'
+import { GroundingGuardGame, PatternPredictorGame, PromptDetectiveGame } from './components/AiChallenges'
 import {
   MemoryCardGame,
   SnakeGame,
@@ -18,6 +19,33 @@ import {
 } from './components/FunZone'
 
 export const gamesCatalog = [
+  {
+    id: 'prompt-detective',
+    icon: Bot,
+    title: 'Prompt Detective',
+    blurb: 'Spot the strongest prompt and sharpen your AI collaboration instincts.',
+    tags: ['AI Lab', '4 rounds', 'Prompt design'],
+    rules: ['Choose the clearest prompt for each scenario.', 'Each correct answer earns one point; read the explanation before continuing.', 'Finish four rounds and replay anytime. No live AI service is used.'],
+    component: PromptDetectiveGame,
+  },
+  {
+    id: 'grounding-guard',
+    icon: Brain,
+    title: 'Grounding Guard',
+    blurb: 'Separate source-backed statements from invented claims in an AI fact-checking challenge.',
+    tags: ['AI Lab', 'Evidence', 'Critical thinking'],
+    rules: ['Read the supplied source and the question carefully.', 'Pick the supported statement, or identify the overreach when asked.', 'Score up to four points and learn from each explanation. All scenarios are fictional.'],
+    component: GroundingGuardGame,
+  },
+  {
+    id: 'pattern-predictor',
+    icon: Gamepad2,
+    title: 'Pattern Predictor',
+    blurb: 'Think like a tiny prediction engine: follow rules, classify inputs, and catch boundaries.',
+    tags: ['AI Lab', 'Logic', 'Prediction'],
+    rules: ['Use the explicit rule in each question to predict the answer.', 'Choose one answer per round and inspect the reasoning.', 'These are educational rule-based puzzles, not a trained machine-learning model.'],
+    component: PatternPredictorGame,
+  },
   {
     id: 'cointoss',
     icon: Coins,
