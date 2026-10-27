@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import AiWorkflow from '../AiWorkflow'
 import {
   ArrowRight,
   ArrowUpRight,
@@ -143,6 +144,7 @@ function OverviewPage() {
 
       <PageSection className="grid items-start gap-8 pt-3 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)]">
         <div className="flex min-w-0 flex-col gap-6">
+          <p className="ai-home-label"><Sparkles size={15} /> FULL STACK ENGINEERING / AI EXPLORATION</p>
           <p className="max-w-4xl bg-[image:var(--portfolio-kicker-gradient)] bg-clip-text font-mono text-[1.03rem] font-black uppercase tracking-[0.22em] text-transparent sm:text-[1.14rem]">
             {profile.title} | {profile.company} | {profile.location}
           </p>
@@ -261,6 +263,10 @@ function OverviewPage() {
             />
           ))}
         </div>
+      </PageSection>
+
+      <PageSection className="pt-6">
+        <AiWorkflow />
       </PageSection>
 
       <PageSection className="pt-6">

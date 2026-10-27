@@ -34,9 +34,9 @@ export const profile = {
   photoAlt: 'Profile photo of Rustom Singh Yadav',
   profileBannerDescription:
     'React-focused full stack developer building enterprise interfaces, live product demos, and polished user experiences backed by clean integrations.',
-  heroTitle: 'React-first interfaces for enterprise products and modern web apps.',
+  heroTitle: 'Human-led engineering. AI-powered possibilities.',
   heroDescription:
-    'I design reusable components, routed experiences, and API-backed workflows that stay fast, maintainable, and visually polished across banking platforms and modern product builds.',
+    'I build React interfaces and reliable enterprise workflows, while exploring how generative AI can accelerate the journey from a thoughtful idea to a well-tested product.',
   overview:
     'Full Stack Developer with close to 4 years of experience building React-driven interfaces, enterprise banking modules, and scalable web applications using OBDX, Java, and modern frontend technologies. Skilled in component-based UI development, reusable frontend architecture, REST API integration, and designing secure, maintainable systems in Agile and Scrum environments.',
   intro:
@@ -219,6 +219,17 @@ export const projects = [
 ]
 
 export const skillGroups = [
+  {
+    title: 'AI Exploration & Developer Workflows',
+    items: [
+      'AI-assisted development',
+      'Prompt design & iteration',
+      'Context-driven code exploration',
+      'Human-reviewed AI output',
+      'Generative AI fundamentals (learning)',
+      'LLM integration patterns (exploring)',
+    ],
+  },
   {
     title: 'Languages',
     items: ['Java', 'JavaScript', 'Python', 'C/C++', 'SQL', 'HTML/CSS'],

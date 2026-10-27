@@ -1,4 +1,5 @@
 import { reactConcepts, skillGroups } from '../portfolioData'
+import AiWorkflow from '../AiWorkflow'
 import { cx, eyebrowClassName, panelClassName } from '../classes'
 import { ConceptCard, PageSection, SectionHeading, SkillGroup } from '../ui'
 
@@ -6,9 +7,9 @@ function SkillsPage() {
   return (
     <PageSection>
       <SectionHeading
-        description="A practical stack spanning React interfaces, backend systems, API integration, testing, delivery tooling, and modern UI implementation."
+        description="Enterprise engineering foundations, modern React delivery, and a growing AI toolkit. AI topics below reflect exploration and learning, not claimed production AI deployments."
         eyebrow="Technical toolkit"
-        title="Skills shaped by React delivery and banking-scale engineering constraints"
+        title="Engineering foundations. An AI-curious mindset."
       />
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.18fr)_minmax(320px,0.82fr)]">
@@ -27,6 +28,7 @@ function SkillsPage() {
           </div>
         </aside>
       </div>
+      <div className="mt-8"><AiWorkflow /></div>
     </PageSection>
   )
 }
