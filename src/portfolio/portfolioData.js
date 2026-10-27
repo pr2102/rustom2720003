@@ -9,6 +9,10 @@ const profilePhotos = [
     src: `${import.meta.env.BASE_URL}profile/Rustom_Profile2.jpeg`,
     objectPosition: '50% 14%',
   },
+  {
+    src: `${import.meta.env.BASE_URL}profile/Rustom_Profile3.png`,
+    objectPosition: '50% 25%',
+  },
 ]
 const profilePhotoFallbackUrl = `${import.meta.env.BASE_URL}profile/rustom-profile-photo.svg`
 const whatsappMessage = encodeURIComponent(
