@@ -2,14 +2,6 @@ const advancedTaskAppUrl = `${import.meta.env.BASE_URL}advanced-task-productivit
 const portfolioWebsiteUrl = 'https://rustom2720003.github.io/rustom2720003/'
 const profilePhotos = [
   {
-    src: `${import.meta.env.BASE_URL}profile/Rustom_Profile.jpeg`,
-    objectPosition: '50% 50%',
-  },
-  {
-    src: `${import.meta.env.BASE_URL}profile/Rustom_Profile2.jpeg`,
-    objectPosition: '50% 14%',
-  },
-  {
     src: `${import.meta.env.BASE_URL}profile/Rustom_Profile3.png`,
     objectPosition: '50% 25%',
   },
