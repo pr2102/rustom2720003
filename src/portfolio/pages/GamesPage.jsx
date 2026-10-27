@@ -21,9 +21,9 @@ function GamesPage() {
       </Link>
 
       <SectionHeading
-        description="Explore the AI Lab with prompt, evidence, and prediction challenges, or jump into a classic. Every game runs in your browser."
+        description="Chase neon signals. Dodge a meteor storm. Or settle in with a classic. Pick your challenge and play right in your browser."
         eyebrow="Games"
-        title="AI brain teasers meet arcade classics"
+        title="Small games. Big arcade energy."
       />
 
       <div className="mb-5 flex flex-wrap gap-3">
@@ -48,6 +48,7 @@ function GamesPage() {
               key={game.id}
               to={game.id}
             >
+              {game.preview && <div aria-hidden="true" className={`arcade-preview arcade-preview-${game.preview}`}><span>{game.preview === 'rush' ? '◎ + ◎' : '✦ ▲ ✦'}</span></div>}
               <div className="flex items-start justify-between gap-4">
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-teal-soft text-teal shadow-[var(--portfolio-soft-shadow)]">
                   <Icon size={21} />

@@ -10,7 +10,7 @@ import {
 import ChessGame from './components/ChessGame'
 import CoinTossGame from './components/CoinTossGame'
 import LudoGame from './components/LudoGame'
-import { GroundingGuardGame, PatternPredictorGame, PromptDetectiveGame } from './components/AiChallenges'
+import { MeteorRunGame, NeonRushGame } from './components/NeonArcade'
 import {
   MemoryCardGame,
   SnakeGame,
@@ -20,31 +20,24 @@ import {
 
 export const gamesCatalog = [
   {
-    id: 'prompt-detective',
+    id: 'neon-rush',
     icon: Bot,
-    title: 'Prompt Detective',
-    blurb: 'Spot the strongest prompt and sharpen your AI collaboration instincts.',
-    tags: ['AI Lab', '4 rounds', 'Prompt design'],
-    rules: ['Choose the clearest prompt for each scenario.', 'Each correct answer earns one point; read the explanation before continuing.', 'Finish four rounds and replay anytime. No live AI service is used.'],
-    component: PromptDetectiveGame,
+    title: 'Neon Rush',
+    blurb: 'Chase the glowing signal in a 30-second neon reflex sprint. Build combos and beat your score.',
+    tags: ['Featured arcade', 'Reflex', '30 seconds'],
+    preview: 'rush',
+    rules: ['Start the round, then tap or click the glowing node.', 'Chain hits within 0.9 seconds for up to 5x points. Wrong nodes cost 2 points.', 'Play for 30 seconds. Keyboard players can use Tab and Enter.'],
+    component: NeonRushGame,
   },
   {
-    id: 'grounding-guard',
+    id: 'meteor-run',
     icon: Brain,
-    title: 'Grounding Guard',
-    blurb: 'Separate source-backed statements from invented claims in an AI fact-checking challenge.',
-    tags: ['AI Lab', 'Evidence', 'Critical thinking'],
-    rules: ['Read the supplied source and the question carefully.', 'Pick the supported statement, or identify the overreach when asked.', 'Score up to four points and learn from each explanation. All scenarios are fictional.'],
-    component: GroundingGuardGame,
-  },
-  {
-    id: 'pattern-predictor',
-    icon: Gamepad2,
-    title: 'Pattern Predictor',
-    blurb: 'Think like a tiny prediction engine: follow rules, classify inputs, and catch boundaries.',
-    tags: ['AI Lab', 'Logic', 'Prediction'],
-    rules: ['Use the explicit rule in each question to predict the answer.', 'Choose one answer per round and inspect the reasoning.', 'These are educational rule-based puzzles, not a trained machine-learning model.'],
-    component: PatternPredictorGame,
+    title: 'Meteor Run',
+    blurb: 'Pilot a glowing starship through a meteor storm. Collect energy crystals as the pace climbs.',
+    tags: ['Featured arcade', 'Survival', 'Touch controls'],
+    preview: 'meteor',
+    rules: ['Use arrow keys or A/D while the playfield is focused, or tap a lane or steering button.', 'Avoid coral meteors and collect mint crystals for 100 bonus points.', 'You have three shields. The longer you survive, the faster the field moves.'],
+    component: MeteorRunGame,
   },
   {
     id: 'cointoss',
